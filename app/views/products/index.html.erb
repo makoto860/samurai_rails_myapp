@@ -1,0 +1,45 @@
+<h1>Products#index</h1>
+<p>Find me in app/views/products/index.html.erb</p>
+<h1>PRODUCT一覧</h1>
+<% if flash[:success] %>
+  <h2 class="success"><%= flash[:success] %></h2>
+<% end %>
+<% if flash[:failure] %>
+  <h2 class="failure"><%= flash[:failure] %></h2>
+<% end %>
+<table>
+  <thead>
+    <tr>
+      <th>PRODUCT_ID</th>
+      <th>USER_ID</th>
+      <th>名前</th>
+      <th>金額</th>
+      <th>住所</th>
+      <th>画像</th>
+      <th>更新日</th>
+      <th>作成日</th>
+      <th>詳細</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.id %></td>
+        <td><%= product.user_id %></td>
+        <td><%= product.name %></td>
+        <td><%= product.amount %></td>
+        <td><%= product.address %></td>
+        <td><%= image_tag product.image, class:'image-field' %></td>
+        <td><%= product.updated_at.to_formatted_s(:datetime_jp) %></td>
+        <td><%= product.created_at.to_formatted_s(:datetime_jp) %></td>
+        <td><%= link_to "詳細", product %></td>
+        <td><%= link_to "編集", [:edit, product] %></td>
+        <td><%= link_to 'product削除', product, method: :delete, data: { confirm: "productを削除しますか？" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><%= link_to "PRODUCT登録", :new_product %></p>

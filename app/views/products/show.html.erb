@@ -1,0 +1,55 @@
+<h1>Products#show</h1>
+<p>Find me in app/views/products/show.html.erb</p>
+<h1>詳細</h1>
+<table>
+  <tr>
+    <th>名前</th>
+    <td><%= @product.name %></td>
+  </tr>
+
+  <tr>
+    <th>金額</th>
+    <td><%= @product.amount %></td>
+  </tr>
+
+  <tr>
+    <th>住所</th>
+    <td><%= @product.address %></td>
+  </tr>
+
+  <tr>
+    <th>画像</th>
+    <td><%= image_tag @product.image, class:'image-field' %></td>
+  </tr>
+
+  <tr>
+    <th>USER ID</th>
+    <td><%= @product.user_id %></td>
+  </tr>
+
+  <tr>
+    <th>PRODUCT ID</th>
+    <td><%= @product.id %></td>
+  </tr>
+</table>
+
+<div>
+  <ul>
+    <li><%= link_to "product情報一覧に戻る", :products %></li>
+  </ul>
+</div>
+
+<% if user_signed_in? %>
+  <h1>予約フォーム</h1>
+  <h2>必須項目です</h2>
+  <%= form_with model: @rent, url: confirmation_rents_path, method: :post, local: true, data: { turbo: false } do |f| %>
+    <ul>
+      <%= f.hidden_field :product_id, value: @product.id %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <li>開始日<%= f.date_field :start_date %></li>
+      <li>終了日<%= f.date_field :end_date %></li>
+      <li>合計人数<%= f.number_field :total_people %></li>
+      <li><%= f.submit "確認画面へ" %></li>
+    </ul>
+  <% end %>
+<% end %>

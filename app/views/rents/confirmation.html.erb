@@ -1,0 +1,21 @@
+<h1>Rents#confirmation</h1>
+<p>Find me in app/views/rents/confirmation.html.erb</p>
+<h1>予約確認</h1>
+<%= render 'layouts/errors', model: @rent %>
+
+<p>名前: <%= @product.name %></p>
+<p>開始日: <%= @rent.start_date.to_formatted_s(:datetime_jp) %></p>
+<p>終了日: <%= @rent.end_date.to_formatted_s(:datetime_jp) %></p>
+<p>合計人数: <%= @rent.total_people %></p>
+
+<%= form_with url: rents_path, method: :post, local: true, data: { turbo: false } do |f| %>
+  <%= f.hidden_field :product_id, value: @product.id, name: 'rent[product_id]' %>
+  <%= f.hidden_field :user_id, value: current_user.id, name: 'rent[user_id]' %>
+  <%= f.hidden_field :start_date, value: @rent.start_date, name: 'rent[start_date]' %>
+  <%= f.hidden_field :end_date, value: @rent.end_date, name: 'rent[end_date]' %>
+  <%= f.hidden_field :total_people, value: @rent.total_people, name: 'rent[total_people]' %>
+  <%= f.hidden_field :total_day, value: @rent.total_day, name: 'rent[total_day]' %>
+  <%= f.hidden_field :total_amount, value: @rent.total_amount, name: 'rent[total_amount]' %>
+  <%= f.submit "予約を確定する" %>
+<% end %>
+<p><%= link_to "キャンセル", :products %></p>
